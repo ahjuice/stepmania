@@ -20,7 +20,7 @@
 
 #include "arch/Sound/RageSoundDriver.h"
 
-GameSoundManager *SOUND = NULL;
+GameSoundManager *SOUND = nullptr;
 
 /*
  * When playing music, automatically search for an SM file for timing data.  If one is
@@ -314,7 +314,7 @@ static void DoPlayOnceFromDir( RString sPath )
 	// If order is exhausted, repopulate and reshuffle
 	if (order.size() == 0)
 	{
-		for (int i = 0; i < arraySoundFiles.size(); ++i)
+		for (int i = 0; i < (int)arraySoundFiles.size(); ++i)
 		{
 			order.push_back(i);
 		}
@@ -436,7 +436,7 @@ int MusicThread_start( void *p )
 GameSoundManager::GameSoundManager()
 {
 	/* Init RageSoundMan first: */
-	ASSERT( SOUNDMAN != NULL );
+	ASSERT( SOUNDMAN != nullptr );
 
 	g_Mutex = new RageEvent("GameSoundManager");
 	g_Playing = new MusicPlaying( new RageSound );
@@ -875,7 +875,7 @@ public:
 		{
 			alignBeat = BArg(8);
 		}
-		p->PlayMusic(musicPath, NULL, loop, musicStart, musicLength,
+		p->PlayMusic(musicPath, nullptr, loop, musicStart, musicLength,
 			fadeIn, fadeOut, alignBeat, applyRate);
 		COMMON_RETURN_SELF;
 	}

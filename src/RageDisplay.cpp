@@ -43,7 +43,7 @@ struct Centering
 
 static vector<Centering> g_CenteringStack( 1, Centering(0, 0, 0, 0) );
 
-RageDisplay*		DISPLAY	= NULL; // global and accessible from anywhere in our program
+RageDisplay*		DISPLAY	= nullptr; // global and accessible from anywhere in our program
 
 Preference<bool>  LOG_FPS( "LogFPS", true );
 Preference<float> g_fFrameLimitPercent( "FrameLimitPercent", 0.0f );
@@ -766,6 +766,13 @@ bool RageDisplay::SaveScreenshot( RString sPath, GraphicsFileFormat format )
 	RageTimer timer;
 	RageSurface *surface = this->CreateScreenshot();
 //	LOG->Trace( "CreateScreenshot took %f seconds", timer.GetDeltaTime() );
+	
+	if (nullptr == surface)
+	{
+		LOG->Trace("CreateScreenshot failed to return a surface");
+		return false;
+	}
+	
 	/* Unless we're in lossless, resize the image to 640x480.  If we're saving lossy,
 	 * there's no sense in saving 1280x960 screenshots, and we don't want to output
 	 * screenshots in a strange (non-1) sample aspect ratio. */
@@ -1081,7 +1088,7 @@ public:
 		ADD_METHOD( GetCumFPS );
 		ADD_METHOD( GetDisplaySpecs );
 		ADD_METHOD( SupportsRenderToTexture );
-		ADD_METHOD( SupportsFullscreenBorderlessWindow);
+		ADD_METHOD( SupportsFullscreenBorderlessWindow );
 	}
 };
 
